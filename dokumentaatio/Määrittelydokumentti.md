@@ -1,5 +1,6 @@
 # RSA projekti
 Opinto-ohjelma: Tietojenkäsittelytieteen kandidaatti (TKT)
+
 Projektin kielet:
 - Dokumentaatio: Suomi
 - Koodi (Muuttujat, funktiot yms.): Englanti
