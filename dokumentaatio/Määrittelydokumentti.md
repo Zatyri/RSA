@@ -14,6 +14,11 @@ Tämä projekti toteutetaan C# ohjelmointikielellä, sillä sitä käytän työs
 - C++:aan olen tutustunut Algoritmit Ongelmanratkaisu kurssilla, mutta taidot ovat toistaiseksi varsin alkeelliset.
 - Pytonia hallitsen koska jotkut yliopiston kurssit vaativat sen käytön, mutta taidot ovat toistaiseksi varsin alkeelliset.
 
+## RSA ohjelma
+Tämän projektin lopputuloksena on ohjelma jolla voi luoda julkisia ja salaisia avainpareja RSA salausta varten. Ohjelmalla voi myös salata ja purkaa viestejä. 
+Avainten luontiin voi ohjelmaan syöttää avainten haluttu vahvuus (bitteinä). Avaimet tallennetaan teksti tiedostoon.
+Ohjelma sisältää kentän johon voi syöttää salaamaton tai salattu viesti. Ohjelma salaa/purkaa viestin.
+
 ## Projektin algoritmit
 ### Suurten alkulukujen löytäminen
 Suurien alkulukujen löytämiseen käytän parittomia satunnaisia numeroita ja testaan ovatko ne alkulukuja Miller-Rabin testillä. 
@@ -32,3 +37,8 @@ Miller-Rabin aikavaativuus on O(k log^3 n) jossa k on testikierrosten määrä j
 Sieve of Eatosthenes aikavaativuus on O(n log(log(n)) ja tilavativuus O(1)
 
 ## Lähteet
+(https://www.geeksforgeeks.org/rsa-algorithm-cryptography/)
+(https://www.geeksforgeeks.org/sieve-of-eratosthenes/)
+(https://www.comparitech.com/blog/information-security/rsa-encryption/)
+
+
