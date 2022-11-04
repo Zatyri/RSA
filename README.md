@@ -7,3 +7,7 @@
 [Testausdokumentti](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/Testausdokumentti.md)
 
 [Toteutusdokumentti](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/Toteutusdokumentti.md)
+
+### Viikkoraportit
+
+[Viikkoraportti 1](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/viikkoraportit/Viikkoraportti%201.md)
