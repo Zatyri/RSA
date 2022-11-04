@@ -28,6 +28,7 @@ Julkisen ja salaisen avaimen luominen on tämän jälkeen melko suoraviivaista.
 
 ### Algoritmien aika- ja tilavaativuudet
 Miller-Rabin aikavaativuus on O(k log^3 n) jossa k on testikierrosten määrä ja n testattava luku ja tilavaativuus O(1).
+
 Sieve of Eatosthenes aikavaativuus on O(n log(log(n)) ja tilavativuus O(1)
 
 ## Lähteet
