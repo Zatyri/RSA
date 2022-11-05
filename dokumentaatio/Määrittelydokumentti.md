@@ -18,7 +18,7 @@ Tämä projekti toteutetaan C# ohjelmointikielellä. Valitsen C# koska se on kie
 Tämän projektin lopputuloksena on ohjelma jolla voi luoda julkisia ja salaisia avainpareja RSA salausta varten. Ohjelmalla voi myös salata ja purkaa viestejä. 
 Avainten luontiin voi ohjelmaan syöttää avainten haluttu vahvuus (bitteinä). Avaimet tallennetaan tekstitiedostoon.
 Ohjelma sisältää kentän johon voi syöttää salaamaton tai salattu viesti. Ohjelma salaa/purkaa viestin.
-Ohjelma sisältää yksinkertaisen graafisen käyttöliittymän.
+Ohjelmaa käytetään konsolin kautta.
 
 ## Projektin algoritmit
 ### Suurten alkulukujen löytäminen
