@@ -6,7 +6,7 @@ Projektin kielet:
 - Koodi (Muuttujat, funktiot yms.): Englanti
 
 ## Ohjelmintikielet
-Tämä projekti toteutetaan C# ohjelmointikielellä, sillä sitä käytän työssäni eniten ja on minulle JavaScriptin rinnalla kieli, jota osaan parhaiten. 
+Tämä projekti toteutetaan C# ohjelmointikielellä. Valitsen C# koska se on kieli jota käytän työssäni eniten ja on minulle JavaScriptin rinnalla kieli, jota osaan parhaiten. En ole tutustunut C#:in dokumentaation luonti ominaisuuksiin. Käytän ohjelmoitaessa metodien XML dokumentointia IDE:n IntelliSensiä varten, mutta en ole luonut siitä erillistä dokumenttia. Tämä lienee mahdollista Sandcastle työkalun avulla. 
 
 ### Kielet joita hallitsen
 - C# ja JavaScript (myös jonkin verran TypeScript:iä) ovat kielet joita osaan parhaiten. Käytän nämä kielet päivittäisessä työssäni sekä omissa projekteissa. 
@@ -16,8 +16,9 @@ Tämä projekti toteutetaan C# ohjelmointikielellä, sillä sitä käytän työs
 
 ## RSA ohjelma
 Tämän projektin lopputuloksena on ohjelma jolla voi luoda julkisia ja salaisia avainpareja RSA salausta varten. Ohjelmalla voi myös salata ja purkaa viestejä. 
-Avainten luontiin voi ohjelmaan syöttää avainten haluttu vahvuus (bitteinä). Avaimet tallennetaan teksti tiedostoon.
+Avainten luontiin voi ohjelmaan syöttää avainten haluttu vahvuus (bitteinä). Avaimet tallennetaan tekstitiedostoon.
 Ohjelma sisältää kentän johon voi syöttää salaamaton tai salattu viesti. Ohjelma salaa/purkaa viestin.
+Ohjelma sisältää yksinkertaisen graafisen käyttöliittymän.
 
 ## Projektin algoritmit
 ### Suurten alkulukujen löytäminen
@@ -37,8 +38,8 @@ Miller-Rabin aikavaativuus on O(k log^3 n) jossa k on testikierrosten määrä j
 Sieve of Eatosthenes aikavaativuus on O(n log(log(n)) ja tilavativuus O(1)
 
 ## Lähteet
-(https://www.geeksforgeeks.org/rsa-algorithm-cryptography/)
-(https://www.geeksforgeeks.org/sieve-of-eratosthenes/)
-(https://www.comparitech.com/blog/information-security/rsa-encryption/)
+https://www.geeksforgeeks.org/rsa-algorithm-cryptography/
+https://www.geeksforgeeks.org/sieve-of-eratosthenes/
+https://www.comparitech.com/blog/information-security/rsa-encryption/
 
 
