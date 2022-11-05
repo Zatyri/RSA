@@ -7,6 +7,8 @@ Olen viikon aikana ehtinyt tutustua pintapuolisesti RSA salaukseen. Yksi RSA:n k
 
 Löysin myös viitteitä siihen että ennen "raskasta" Miller-Rabin testiä voisi suorittaa pienillä alkuluvuilla "kevyet" testit arvatulle numerolle. Pieniä alkulukuja ajattelin löytää Sieve of Eratosthenes algoritmilla. Ajattelin myös testata miten suuri vaikutus tällä kevyellä testillä on.
 
+Käytin viikon aikana noin 6 tuntia
+
 ### Mitä opin
 Opin tällä viikolla että isojen alkulukujen löytäminen ei ole triviaali asia. Opin myös että on algoritmeja joiden lopputulos on "riittävän" oikein kuten esimerkiksi Miller-Rabin algoritmi, joka ei ole 100% varma, että testattu luku on alkuluku. Algoritmi antaa kuitenkin 100% varmuuden jos testattava luku ei ole alkuluku.
 Vaikka RSA on korkealta tasolta tuttu, opin miten julkista ja salaista avainta luodaan.
