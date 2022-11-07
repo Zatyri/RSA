@@ -27,4 +27,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover '.\RSA console app\RSA console app TEST\RSA console app TEST.csproj'
     - name: Coverage report to Codecov
-      run: curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov -R '/home/runner/work/RSA/RSA/RSA console app/RSA console app TEST/'
+      run: curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov -R '/home/runner/work/RSA/RSA/RSA console app/RSA console app TEST/' -f coverage.opencover.xml
