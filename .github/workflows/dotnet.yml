@@ -26,3 +26,5 @@ jobs:
       run: dotnet build --no-restore '.\RSA console app\RSA console app\RSA console app.csproj'
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover '.\RSA console app\RSA console app TEST\RSA console app TEST.csproj'
+    - name: Coverage report to Codecov
+      run: bash <(curl -s https://codecov.io/bash)
