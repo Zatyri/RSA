@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore '.\RSA console app\RSA console app\RSA console app.csproj'
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal '.\RSA console app\RSA console app TEST\RSA console app TEST.csproj'
