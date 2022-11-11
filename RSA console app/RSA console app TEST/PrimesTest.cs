@@ -27,8 +27,8 @@ namespace RSA_console_app.Tests
             BigInteger[] arrayBig = _primes.GetTwoRandomOddNumbers(512);
             BigInteger[] arraySmall = _primes.GetTwoRandomOddNumbers(5);
 
-            CollectionAssert.Contains(new[] { 153, 154 }, arrayBig[0].ToString().Length);
-            CollectionAssert.Contains(new[] { 153, 154 }, arrayBig[1].ToString().Length);
+            CollectionAssert.Contains(new[] { 153, 154, 155 }, arrayBig[0].ToString().Length);
+            CollectionAssert.Contains(new[] { 153, 154, 155 }, arrayBig[1].ToString().Length);
 
             Assert.AreEqual(2, arraySmall[0].ToString().Length);
             Assert.AreEqual(2, arraySmall[1].ToString().Length);
@@ -42,6 +42,26 @@ namespace RSA_console_app.Tests
 
             Assert.AreEqual(one, array[0] % 2);
             Assert.AreEqual(one, array[1] % 2);
+        }
+
+        [Test]
+        public void GetRandomOddNumber_returns_correctSizeNumber()
+        {
+            BigInteger Big = _primes.GetRandomOddNumber(512);
+            BigInteger Small = _primes.GetRandomOddNumber(5);
+
+            CollectionAssert.Contains(new[] { 153, 154, 155 }, Big.ToString().Length);
+
+            CollectionAssert.Contains(new[] { 1, 2 }, Small.ToString().Length);
+        }
+
+        [Test]
+        public void GetRandomOddNumber_returns_oddNumber()
+        {
+            BigInteger value = _primes.GetRandomOddNumber(512);
+            BigInteger one = new BigInteger(1);
+
+            Assert.AreEqual(one, value % 2);            
         }
 
         [Test]

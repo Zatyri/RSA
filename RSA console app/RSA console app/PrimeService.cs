@@ -71,7 +71,7 @@ namespace RSA_console_app
 
         public bool MillerRabinPrimalityTest(BigInteger powValue, BigInteger primeCandidate)
         {
-            BigInteger randomNumber = GetRandomNumber((int)primeCandidate.GetBitLength() - 1);
+            BigInteger randomNumber = GetRandomOddNumber((int)primeCandidate.GetBitLength() - 1);
 
             BigInteger value = BigInteger.ModPow(randomNumber, powValue, primeCandidate);
 
@@ -116,54 +116,81 @@ namespace RSA_console_app
         /// <returns>A BigInteger array containing two random BigIntegers</returns>
         public BigInteger[] GetTwoRandomOddNumbers(int bits)
         {
+            int offset = 0;
+            int bitLength = bits;
+            while(bitLength % 8 != 0)
+            {
+                offset++;
+                bitLength++;
+            }
+
             Random rand = new Random();
-            BitArray bitArrayA = new BitArray(bits);
-            BitArray bitArrayB = new BitArray(bits);
+            BitArray bitArrayA = new BitArray(bitLength);
+            BitArray bitArrayB = new BitArray(bitLength);
 
             bitArrayA[0] = true;
             bitArrayB[0] = true;
 
+            bitArrayA[bitLength - offset - 1] = true;
+            bitArrayB[bitLength - offset - 1] = true;
 
-            // makes sure number is not even
-            bitArrayA[bits - 1] = true;
-            bitArrayB[bits - 1] = true;
-
-            for (int i = 1; i < bits - 1; i++)
+            for (int i = 1; i < bitLength - offset - 1; i++)
             {
                 bitArrayA[i] = rand.Next(0, 2) == 0 ? false : true;
                 bitArrayB[i] = rand.Next(0, 2) == 0 ? false : true;
             }
 
-            byte[] bytesA = new byte[(bits - 1) / 8 + 1];
-            byte[] bytesB = new byte[(bits - 1) / 8 + 1];
+            byte[] bytesA = new byte[(bitLength) / 8];
+            byte[] bytesB = new byte[(bitLength) / 8];
+
 
             bitArrayA.CopyTo(bytesA, 0);
             bitArrayB.CopyTo(bytesB, 0);
 
-            return new BigInteger[] {
-                BigInteger.Abs(new BigInteger(bytesA)),
-                BigInteger.Abs(new BigInteger(bytesB))
+            BigInteger[] result = new BigInteger[] {
+                new BigInteger(bytesA, isUnsigned: true, isBigEndian: true),
+                new BigInteger(bytesB, isUnsigned: true, isBigEndian: true)
             };
+
+            if (result[0].IsEven) result[0]++;
+            if (result[1].IsEven) result[1]++;
+
+            return result;
         }
 
-        public BigInteger GetRandomNumber(int bits)
+        /// <summary>
+        /// Generates a random BigInteger with desired max bit size.
+        /// The BigInteger is guaranteed to be odd.
+        /// </summary>
+        /// <param name="bits">Length of the BigInteger in bits</param>
+        /// <returns>A random BigInteger</returns>
+        public BigInteger GetRandomOddNumber(int bits)
         {
+            int offset = 0;
+            int bitLength = bits;
+            while (bitLength % 8 != 0)
+            {
+                offset++;
+                bitLength++;
+            }
             Random rand = new Random();
-            BitArray bitArray = new BitArray(bits);
 
-            // makes sure number is not even
-            bitArray[bits - 1] = true;
+            BitArray bitArray = new BitArray(bitLength);
 
-            for (int i = 0; i < bits - 1; i++)
+            for (int i = 1; i < bitLength - offset - 1; i++)
             {
                 bitArray[i] = rand.Next(0, 2) == 0 ? false : true;
             }
 
-            byte[] bytes = new byte[(bits - 1) / 8 + 1];
+            byte[] bytes = new byte[(bitLength) / 8];
 
             bitArray.CopyTo(bytes, 0);
 
-            return BigInteger.Abs(new BigInteger(bytes));
+            BigInteger result = new BigInteger(bytes, isUnsigned: true, isBigEndian: true);
+
+            if (result.IsEven) result++;
+
+            return result;
          
         }
     }
