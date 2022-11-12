@@ -14,3 +14,5 @@
 ### Viikkoraportit
 
 [Viikkoraportti 1](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/viikkoraportit/Viikkoraportti%201.md)
+
+[Viikkoraportti 2](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/viikkoraportit/viikkoraportti%202.md)
