@@ -9,14 +9,42 @@ using System.Threading.Tasks;
 
 namespace RSA_console_app
 {
+    /// <summary>
+    /// Service for generating prime numbers
+    /// </summary>
     public class PrimeService
     {
-        public int GetPrime()
+        /// <summary>
+        /// Generates two random prime numbers with desired bit length
+        /// </summary>
+        /// <param name="bits">The length of the numbers in bits</param>
+        /// <param name="rounds">Optional parameter to modify certainty of the the numbers to be prime</param>
+        /// <returns>Array of two prime numbers</returns>
+        public BigInteger[] GetTwoPrimes(int bits, int rounds = 40)
         {
-            BigInteger[] randomNumbers = GetTwoRandomOddNumbers(512);
-            return 17;
+            BigInteger[] randomNumbers = GetTwoRandomOddNumbers(bits);
+
+            BigInteger prime1 = randomNumbers[0];
+            while (!IsNumberPrime(prime1, rounds))
+            {
+                prime1 += 2;
+            }
+
+            BigInteger prime2 = randomNumbers[1];
+            while (!IsNumberPrime(prime2, rounds))
+            {
+                prime2 += 2;
+            }
+
+            return new BigInteger[] { prime1, prime2 };
         }
 
+        /// <summary>
+        /// Checks if given number is a prime number
+        /// </summary>
+        /// <param name="primeCandidate">The number to test for primality</param>
+        /// <param name="rounds">How many times to perform the test on the number</param>
+        /// <returns>False if primeCandidate is composite. True if primeCandidate is probably a prime (not 100% accuracy)</returns>
         public bool IsNumberPrime(BigInteger primeCandidate, int rounds)
         {
             if (primeCandidate == 2 || primeCandidate == 3)
@@ -24,54 +52,30 @@ namespace RSA_console_app
             if (primeCandidate < 2 || primeCandidate % 2 == 0)
                 return false;
 
-            BigInteger d = CalculateInitialPowerValue(primeCandidate - 1);
-
+            BigInteger powValue = CalculateInitialPowerValue(primeCandidate - 1);
 
             for (int i = 0; i < rounds; i++)
             {
+                bool isComposite = MillerRabinPrimalityTest(powValue, primeCandidate);
 
+                if (!isComposite)
+                {
+                    return false;
+                }
             }
-            // There is no built-in method for generating random BigInteger values.
-            // Instead, random BigIntegers are constructed from randomly generated
-            // byte arrays of the same length as the source.
-            //RandomNumberGenerator rng = RandomNumberGenerator.Create();
-            //byte[] bytes = new byte[source.ToByteArray().LongLength];
-            //BigInteger a;
-
-            //for (int i = 0; i < certainty; i++)
-            //{
-            //    do
-            //    {
-            //        // This may raise an exception in Mono 2.10.8 and earlier.
-            //        // http://bugzilla.xamarin.com/show_bug.cgi?id=2761
-            //        rng.GetBytes(bytes);
-            //        a = new BigInteger(bytes);
-            //    }
-            //    while (a < 2 || a >= source - 2);
-
-            //    BigInteger x = BigInteger.ModPow(a, d, source);
-            //    if (x == 1 || x == source - 1)
-            //        continue;
-
-            //    for (int r = 1; r < s; r++)
-            //    {
-            //        x = BigInteger.ModPow(x, 2, source);
-            //        if (x == 1)
-            //            return false;
-            //        if (x == source - 1)
-            //            break;
-            //    }
-
-            //    if (x != source - 1)
-            //        return false;
-            //}
 
             return true;
         }
 
+        /// <summary>
+        /// The Miller-Rabin Primality test identifies if the given number is a composite
+        /// </summary>
+        /// <param name="powValue">A odd number that sitisfies powValue*2^r = primeCandidate - 1 for some r >= 1</param>
+        /// <param name="primeCandidate">The number to test if composite</param>
+        /// <returns>False if primeCandidate is composite. True if primeCandidate is probably a prime (not 100% accuracy)</returns>
         public bool MillerRabinPrimalityTest(BigInteger powValue, BigInteger primeCandidate)
         {
-            BigInteger randomNumber = GetRandomOddNumber((int)primeCandidate.GetBitLength() - 1);
+            BigInteger randomNumber = GetRandomNumber(primeCandidate);
 
             BigInteger value = BigInteger.ModPow(randomNumber, powValue, primeCandidate);
 
@@ -159,21 +163,23 @@ namespace RSA_console_app
         }
 
         /// <summary>
-        /// Generates a random BigInteger with desired max bit size.
-        /// The BigInteger is guaranteed to be odd.
+        /// Generates a random BigInteger between 2 and the input number - 1.
         /// </summary>
-        /// <param name="bits">Length of the BigInteger in bits</param>
+        /// <param name="number">Max size - 1 of the number to return</param>
         /// <returns>A random BigInteger</returns>
-        public BigInteger GetRandomOddNumber(int bits)
+        public BigInteger GetRandomNumber(BigInteger number)
         {
             int offset = 0;
-            int bitLength = bits;
+            int bitLength = (int)(number - 1).GetBitLength();
+            
             while (bitLength % 8 != 0)
             {
                 offset++;
                 bitLength++;
             }
             Random rand = new Random();
+
+            
 
             BitArray bitArray = new BitArray(bitLength);
 
@@ -188,7 +194,7 @@ namespace RSA_console_app
 
             BigInteger result = new BigInteger(bytes, isUnsigned: true, isBigEndian: true);
 
-            if (result.IsEven) result++;
+            if (result < 2) result = 2;
 
             return result;
          
