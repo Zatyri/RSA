@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RSA_console_app
+namespace RSA_console_app.services
 {
     /// <summary>
     /// Service for generating prime numbers
@@ -122,7 +122,7 @@ namespace RSA_console_app
         {
             int offset = 0;
             int bitLength = bits;
-            while(bitLength % 8 != 0)
+            while (bitLength % 8 != 0)
             {
                 offset++;
                 bitLength++;
@@ -144,8 +144,8 @@ namespace RSA_console_app
                 bitArrayB[i] = rand.Next(0, 2) == 0 ? false : true;
             }
 
-            byte[] bytesA = new byte[(bitLength) / 8];
-            byte[] bytesB = new byte[(bitLength) / 8];
+            byte[] bytesA = new byte[bitLength / 8];
+            byte[] bytesB = new byte[bitLength / 8];
 
 
             bitArrayA.CopyTo(bytesA, 0);
@@ -171,7 +171,7 @@ namespace RSA_console_app
         {
             int offset = 0;
             int bitLength = (int)(number - 1).GetBitLength();
-            
+
             while (bitLength % 8 != 0)
             {
                 offset++;
@@ -179,7 +179,7 @@ namespace RSA_console_app
             }
             Random rand = new Random();
 
-            
+
 
             BitArray bitArray = new BitArray(bitLength);
 
@@ -188,7 +188,7 @@ namespace RSA_console_app
                 bitArray[i] = rand.Next(0, 2) == 0 ? false : true;
             }
 
-            byte[] bytes = new byte[(bitLength) / 8];
+            byte[] bytes = new byte[bitLength / 8];
 
             bitArray.CopyTo(bytes, 0);
 
@@ -197,7 +197,7 @@ namespace RSA_console_app
             if (result < 2) result = 2;
 
             return result;
-         
+
         }
     }
 }

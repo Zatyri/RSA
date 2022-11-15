@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using RSA_console_app;
+using RSA_console_app.services;
 using System.Numerics;
 
 namespace RSA_console_app.Tests
