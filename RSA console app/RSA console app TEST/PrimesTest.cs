@@ -24,8 +24,8 @@ namespace RSA_console_app.Tests
             CollectionAssert.Contains(new[] { 153, 154, 155 }, arrayBig[0].ToString().Length);
             CollectionAssert.Contains(new[] { 153, 154, 155 }, arrayBig[1].ToString().Length);
 
-            Assert.AreEqual(2, arraySmall[0].ToString().Length);
-            Assert.AreEqual(2, arraySmall[1].ToString().Length);
+            Assert.AreEqual(3, arraySmall[0].ToString().Length);
+            Assert.AreEqual(3, arraySmall[1].ToString().Length);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace RSA_console_app.Tests
 
             CollectionAssert.Contains(new[] { 153, 154, 155 }, Big.ToString().Length);
 
-            CollectionAssert.Contains(new[] { 1, 2 }, Small.ToString().Length);
+            CollectionAssert.Contains(new[] { 1,2 }, Small.ToString().Length);
         }
 
         [Test]

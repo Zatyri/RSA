@@ -8,10 +8,17 @@ using RSA_console_app.models;
 
 namespace RSA_console_app.services
 {
+    /// <summary>
+    /// Class for generating public and private key pair
+    /// </summary>
     public class KeyGeneration
     {
         private PrimeService primeService;
 
+        /// <summary>
+        /// The constructor for the key generation class
+        /// </summary>
+        /// <param name="primeService">A service that generates primes</param>
         public KeyGeneration(PrimeService primeService)
         {
             this.primeService = primeService;
@@ -22,7 +29,7 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="bitSize">The desired bit size of the key</param>
         /// <returns>A public key with desired bit size</returns>
-        public PublicKey GeneratePublicKey(int bitSize)
+        internal PublicKey GeneratePublicKey(int bitSize)
         {
             BigInteger[] primes = primeService.GetTwoPrimes(bitSize / 2);
 
@@ -51,7 +58,7 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="publicKey">The public key to be paired with the private key</param>
         /// <returns>A private key</returns>
-        public PrivateKey GeneratePrivateKey(PublicKey publicKey)
+        internal PrivateKey GeneratePrivateKey(PublicKey publicKey)
         {
             BigInteger d = 0;
             int i = 0;
@@ -70,6 +77,11 @@ namespace RSA_console_app.services
             return new PrivateKey(d, publicKey.n);
         }
 
+        /// <summary>
+        /// Creates a public and private key pair
+        /// </summary>
+        /// <param name="bitSize">The size in bits of the keys generated</param>
+        /// <returns>A tuple with the public and private key</returns>
         public (PublicKey, PrivateKey) GetPublicAndPrivateKeyPair(int bitSize)
         {
             PublicKey publicKey = GeneratePublicKey(bitSize);

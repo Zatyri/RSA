@@ -45,7 +45,7 @@ namespace RSA_console_app.services
         /// <param name="primeCandidate">The number to test for primality</param>
         /// <param name="rounds">How many times to perform the test on the number</param>
         /// <returns>False if primeCandidate is composite. True if primeCandidate is probably a prime (not 100% accuracy)</returns>
-        public bool IsNumberPrime(BigInteger primeCandidate, int rounds)
+        internal bool IsNumberPrime(BigInteger primeCandidate, int rounds)
         {
             if (primeCandidate == 2 || primeCandidate == 3)
                 return true;
@@ -73,7 +73,7 @@ namespace RSA_console_app.services
         /// <param name="powValue">A odd number that sitisfies powValue*2^r = primeCandidate - 1 for some r >= 1</param>
         /// <param name="primeCandidate">The number to test if composite</param>
         /// <returns>False if primeCandidate is composite. True if primeCandidate is probably a prime (not 100% accuracy)</returns>
-        public bool MillerRabinPrimalityTest(BigInteger powValue, BigInteger primeCandidate)
+        internal bool MillerRabinPrimalityTest(BigInteger powValue, BigInteger primeCandidate)
         {
             BigInteger randomNumber = GetRandomNumber(primeCandidate);
 
@@ -101,7 +101,7 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="numbern">An odd number that is n-1, where n is the number to test for primality</param>
         /// <returns>The number d, for raising 2^d in the Miller-Rabin test</returns>
-        public BigInteger CalculateInitialPowerValue(BigInteger numbern)
+        internal BigInteger CalculateInitialPowerValue(BigInteger numbern)
         {
 
             BigInteger result = numbern;
@@ -118,15 +118,16 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="bits">Length of the BigIntegers in bits</param>
         /// <returns>A BigInteger array containing two random BigIntegers</returns>
-        public BigInteger[] GetTwoRandomOddNumbers(int bits)
+        internal BigInteger[] GetTwoRandomOddNumbers(int bits)
         {
-            int offset = 0;
-            int bitLength = bits;
-            while (bitLength % 8 != 0)
-            {
-                offset++;
-                bitLength++;
-            }
+            int offset = (bits % 8);
+            if (offset != 0) offset = 8 - offset;
+            int bitLength = bits + offset;
+            //while (bitLength % 8 != 0)
+            //{
+            //    offset++;
+            //    bitLength++;
+            //}
 
             Random rand = new Random();
             BitArray bitArrayA = new BitArray(bitLength);
@@ -135,13 +136,22 @@ namespace RSA_console_app.services
             bitArrayA[0] = true;
             bitArrayB[0] = true;
 
-            bitArrayA[bitLength - offset - 1] = true;
-            bitArrayB[bitLength - offset - 1] = true;
 
             for (int i = 1; i < bitLength - offset - 1; i++)
             {
                 bitArrayA[i] = rand.Next(0, 2) == 0 ? false : true;
                 bitArrayB[i] = rand.Next(0, 2) == 0 ? false : true;
+            }
+
+            if(bitLength > 8)
+            {
+                bitArrayA[bitLength - 1] = true;
+                bitArrayB[bitLength - 1] = true;
+            }
+            else
+            {
+                bitArrayA[7] = true;
+                bitArrayB[7] = true;
             }
 
             byte[] bytesA = new byte[bitLength / 8];
@@ -152,8 +162,8 @@ namespace RSA_console_app.services
             bitArrayB.CopyTo(bytesB, 0);
 
             BigInteger[] result = new BigInteger[] {
-                new BigInteger(bytesA, isUnsigned: true, isBigEndian: true),
-                new BigInteger(bytesB, isUnsigned: true, isBigEndian: true)
+                new BigInteger(bytesA, isUnsigned: true, isBigEndian: false),
+                new BigInteger(bytesB, isUnsigned: true, isBigEndian: false)
             };
 
             if (result[0].IsEven) result[0]++;
@@ -167,7 +177,7 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="number">Max size - 1 of the number to return</param>
         /// <returns>A random BigInteger</returns>
-        public BigInteger GetRandomNumber(BigInteger number)
+        internal BigInteger GetRandomNumber(BigInteger number)
         {
             int offset = 0;
             int bitLength = (int)(number - 1).GetBitLength();
