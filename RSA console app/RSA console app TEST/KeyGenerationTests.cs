@@ -51,9 +51,9 @@ namespace RSA_console_app.Tests
             PrivateKey privateKey2 = _keyGenerator.GeneratePrivateKey(_keyGenerator.GeneratePublicKey(1023));
             PrivateKey privateKey3 = _keyGenerator.GeneratePrivateKey(_keyGenerator.GeneratePublicKey(15));
 
-            CollectionAssert.Contains(new[] { 510, 511, 512 }, privateKey1.d.GetBitLength());
-            CollectionAssert.Contains(new[] { 1021, 1022, 1023 }, privateKey2.d.GetBitLength());
-            CollectionAssert.Contains(new[] { 14, 15 }, privateKey3.d.GetBitLength());
+            CollectionAssert.Contains(new[] { 506, 507, 508, 509, 510, 511, 512 }, privateKey1.d.GetBitLength());
+            CollectionAssert.Contains(new[] { 1020, 1021, 1022, 1023 }, privateKey2.d.GetBitLength());
+            CollectionAssert.Contains(new[] { 11, 12, 13, 14, 15 }, privateKey3.d.GetBitLength());
         }
     }
 }

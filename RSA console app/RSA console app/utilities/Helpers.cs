@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace RSA_console_app
 {
+    /// <summary>
+    /// Helper file with helpful functions
+    /// </summary>
     public static class Helpers
     {
+        /// <summary>
+        /// Calculates greatest common divisor
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static BigInteger gcd(BigInteger a, BigInteger b)
         {
             BigInteger temp;
