@@ -13,6 +13,9 @@ Miller-Rabin algoritmin osalta testataan että algoritmi palauttaa epätosi kun 
 ### Tiedostoon kirjoittaminen ja lukeminen
 Testataan että ohjelma kykenee kirjoittamaan kun ohjelma saa validin polun ja hylkää silloin kun polkua ei ole olemassa.
 
+## Testien toistettavuus
+Testejä on helppo toistaa ajamalla yksikkötestit.
+
 
 
 
