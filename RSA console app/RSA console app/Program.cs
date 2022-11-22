@@ -13,32 +13,65 @@ namespace RSA_console_app
 
         static void Main(string[] args)
         {
-            KeyGeneration keyGeneration = new KeyGeneration(new PrimeService());
+            bool closeApp = false;
+            string keyBasePath = "";
 
-            (PublicKey, PrivateKey) keyPair = keyGeneration.GetPublicAndPrivateKeyPair(1024);
+            IOService ioService = new IOService(
+                new KeyGeneration(
+                    new PrimeService()
+                    )); 
 
-            FileService.WritePublicKey(keyPair.Item1);
-            FileService.WritePrivateKey(keyPair.Item2);
-            PublicKey publicKey = FileService.ReadPublicKey();
-            PrivateKey privateKey = FileService.ReadPrivateKey();
 
-            string message = "Hello World! åäö";
 
-            byte[] plaintext = ASCIIEncoding.UTF8.GetBytes(message);
-            BigInteger pt = new BigInteger(plaintext);
-            if (pt > publicKey.n)
-                throw new Exception();
-            Console.WriteLine("before:  " + pt);
+            Console.WriteLine("Welcome to RSA console app");
+            while (!closeApp)
+            {
 
-            BigInteger ct = BigInteger.ModPow(pt, publicKey.e, publicKey.n);
+                switch (Console.ReadLine())
+                {
+                    case "keys":
+                        keyBasePath = ioService.GenerateKeyPair();
+                        break;
+                    case "encrypt":
+                        break;
+                    case "help":
+                        Console.WriteLine("Help is on the way");
+                        break;
+                    case "exit":
+                        closeApp = true;
+                        break;
+                    default:
+                        Console.WriteLine("Need help?");
+                        break;
+                }
+            }
+            //KeyGeneration keyGeneration = new KeyGeneration(new PrimeService());
+
+            //(PublicKey, PrivateKey) keyPair = keyGeneration.GetPublicAndPrivateKeyPair(89);
+
+            //FileService.WritePublicKey(keyPair.Item1);
+            //FileService.WritePrivateKey(keyPair.Item2);
+            //PublicKey publicKey = FileService.ReadPublicKey();
+            //PrivateKey privateKey = FileService.ReadPrivateKey();
+
+            //string message = "Hello World";
+
+            //byte[] plaintext = ASCIIEncoding.UTF8.GetBytes(message);
+            //BigInteger pt = new BigInteger(plaintext);
+            //var a = pt.ToString().Length;
+            //if (pt > publicKey.n)
+            //    throw new Exception();
+            //Console.WriteLine("before:  " + pt);
+
+            //BigInteger ct = BigInteger.ModPow(pt, publicKey.e, publicKey.n);
             //Console.WriteLine("Encoded:  " + ct);
-            Console.WriteLine(ASCIIEncoding.UTF8.GetString(ct.ToByteArray()));
+            //Console.WriteLine(ASCIIEncoding.UTF8.GetString(ct.ToByteArray()));
 
-            BigInteger dc = BigInteger.ModPow(ct, privateKey.d, privateKey.n);
-            Console.WriteLine("Decoded:  " + dc);
+            //BigInteger dc = BigInteger.ModPow(ct, privateKey.d, privateKey.n);
+            //Console.WriteLine("Decoded:  " + dc);
             
-            string decoded = ASCIIEncoding.UTF8.GetString(dc.ToByteArray());
-            Console.WriteLine("As ASCII: " + decoded);
+            //string decoded = ASCIIEncoding.UTF8.GetString(dc.ToByteArray());
+            //Console.WriteLine("As ASCII: " + decoded);
 
         }
 
