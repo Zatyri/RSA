@@ -123,11 +123,6 @@ namespace RSA_console_app.services
             int offset = (bits % 8);
             if (offset != 0) offset = 8 - offset;
             int bitLength = bits + offset;
-            //while (bitLength % 8 != 0)
-            //{
-            //    offset++;
-            //    bitLength++;
-            //}
 
             Random rand = new Random();
             BitArray bitArrayA = new BitArray(bitLength);
@@ -143,16 +138,10 @@ namespace RSA_console_app.services
                 bitArrayB[i] = rand.Next(0, 2) == 0 ? false : true;
             }
 
-            if(bitLength > 8)
-            {
-                bitArrayA[bitLength - 1] = true;
-                bitArrayB[bitLength - 1] = true;
-            }
-            else
-            {
-                bitArrayA[7] = true;
-                bitArrayB[7] = true;
-            }
+
+            bitArrayA[bitLength - offset - 1] = true;
+            bitArrayB[bitLength - offset - 1] = true;
+
 
             byte[] bytesA = new byte[bitLength / 8];
             byte[] bytesB = new byte[bitLength / 8];

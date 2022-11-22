@@ -18,35 +18,43 @@ namespace RSA_console_app.Tests
         [Test]
         public void GetTwoRandomOddNumbers_returns_correctSizeNumbers()
         {
-            BigInteger[] arrayBig = _primes.GetTwoRandomOddNumbers(512);
-            BigInteger[] arraySmall = _primes.GetTwoRandomOddNumbers(5);
+            int[] testValues = new int[] {1,3,7,8,100,200,256,500,511,512,};
 
-            CollectionAssert.Contains(new[] { 153, 154, 155 }, arrayBig[0].ToString().Length);
-            CollectionAssert.Contains(new[] { 153, 154, 155 }, arrayBig[1].ToString().Length);
+            for(int i = 0; i < testValues.Length; i++)
+            {
+                int testValue = testValues[i];
 
-            Assert.AreEqual(3, arraySmall[0].ToString().Length);
-            Assert.AreEqual(3, arraySmall[1].ToString().Length);
+                BigInteger[] testArr = _primes.GetTwoRandomOddNumbers(testValue);
+                Assert.AreEqual(testValue, testArr[0].GetBitLength());
+                Assert.AreEqual(testValue, testArr[1].GetBitLength());
+            }
         }
 
         [Test]
         public void GetTwoRandomOddNumbers_returns_oddNumbers()
         {
-            BigInteger[] array = _primes.GetTwoRandomOddNumbers(512);
+            int[] testValues = new int[] { 1, 3, 7, 8, 100, 200, 256, 500, 511, 512, };
             BigInteger one = new BigInteger(1);
 
-            Assert.AreEqual(one, array[0] % 2);
-            Assert.AreEqual(one, array[1] % 2);
+            for (int i = 0; i < testValues.Length; i++)
+            {
+                int testValue = testValues[i];
+
+                BigInteger[] array = _primes.GetTwoRandomOddNumbers(testValue);
+                Assert.AreEqual(one, array[0] % 2);
+                Assert.AreEqual(one, array[1] % 2);
+            }
         }
 
         [Test]
-        public void GetRandomNumber_returns_correctSizeNumber()
+        public void GetRandomNumber_returns_number()
         {
             BigInteger Big = _primes.GetRandomNumber(BigInteger.Parse("6560522779398978078428968808830616817527644566298800171483191999296788812867182494507522684947796326950279426930276927952705588425163193716055887444396863"));
             BigInteger Small = _primes.GetRandomNumber(5);
 
-            CollectionAssert.Contains(new[] { 153, 154, 155 }, Big.ToString().Length);
+            Assert.AreEqual(Big.GetType(), typeof(BigInteger));
 
-            CollectionAssert.Contains(new[] { 1,2 }, Small.ToString().Length);
+            Assert.AreEqual(Small.GetType(), typeof(BigInteger));
         }
 
         [Test]
