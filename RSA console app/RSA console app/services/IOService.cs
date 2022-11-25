@@ -12,40 +12,16 @@ namespace RSA_console_app.services
     /// <summary>
     /// Class to handle IO to the CLI
     /// </summary>
-    public class IOService
+    public static class IOService
     {
-        private KeyGeneration _keyGenerator;
         
         /// <summary>
-        /// Constructor for the IOService
-        /// </summary>
-        /// <param name="keyGenerator">The key generator</param>
-        public IOService(KeyGeneration keyGenerator)
-        {
-            _keyGenerator = keyGenerator;            
-        }
-
-        /// <summary>
-        /// Generates public and private key of desired bit size to desired directory
-        /// </summary>
-        public string GenerateKeyPair()
-        {
-            int bitSize = GetBitSize();
-            string? path = GetPath();
-            (PublicKey, PrivateKey) keyPair = _keyGenerator.GetPublicAndPrivateKeyPair(bitSize);
-            FileService.WritePublicKey(keyPair.Item1, path);
-            FileService.WritePrivateKey(keyPair.Item2, path);
-
-            return string.IsNullOrEmpty(path) ? "" : path;
-        }
-
-        /// <summary>
-        /// Gets the path for key files from the user
+        /// Gets the path from user
         /// </summary>
         /// <returns>The path as a string</returns>
-        private string? GetPath()
+        public static string GetPath(string pathPurpose)
         {
-            Console.WriteLine("Provide a existing directory for keys (leave empty for program root dir):");
+            Console.WriteLine($"Provide an existing directory for {pathPurpose} (leave empty for program root dir):");
 
             string? path = null;
             while (true)
@@ -64,14 +40,42 @@ namespace RSA_console_app.services
                     break;
                 }
             }
-            return string.IsNullOrEmpty(path) ? null : path;
+            return string.IsNullOrEmpty(path) ? Directory.GetCurrentDirectory() : path;
+        }
+
+        /// <summary>
+        /// Gets the file from user
+        /// </summary>
+        /// <returns>The path to file as a string</returns>
+        public static string GetFilePath(string pathPurpose)
+        {
+            Console.WriteLine($"Give path for {pathPurpose} file");
+
+            string? path = null;
+            while (true)
+            {
+                path = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(path)) break;
+
+
+                if (!File.Exists(path))
+                {
+                    Console.WriteLine("File not found. Please provide correct path to file");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return string.IsNullOrEmpty(path) ? "" : path;
         }
 
         /// <summary>
         /// Gets the desired key bit size from the user
         /// </summary>
         /// <returns></returns>
-        private int GetBitSize()
+        public static int GetBitSize()
         {
             Console.WriteLine("Give key bit size. (default = 1024)");
 
@@ -94,5 +98,33 @@ namespace RSA_console_app.services
             }
             return bitSize;
         }
+
+        /// <summary>
+        /// Asks user for message to encryps
+        /// </summary>
+        /// <returns>The message that the user wants to encrypt</returns>
+        public static string GetMessageToEncrypt()
+        {
+            string? message;
+
+            while (true)
+            {
+                Console.WriteLine("Write message to encrypt:");
+
+                message = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(message))
+                {
+                    Console.WriteLine("Message can not contain only spaces");
+                } else
+                {
+                    break;
+                }
+
+            }
+            return message;
+        }
+
+
     }
 }

@@ -45,15 +45,16 @@ namespace RSA_console_app.Tests
         }
 
         [Test]
-        public void GeneratePrivateKey_returns_privateKeyOfDesiredSize()
+        public void GeneratePrivateKey_returns_privateKeyWithAlostSameBitSizeAsPublicKey()
         {
             PrivateKey privateKey1 = _keyGenerator.GeneratePrivateKey(_keyGenerator.GeneratePublicKey(512));
             PrivateKey privateKey2 = _keyGenerator.GeneratePrivateKey(_keyGenerator.GeneratePublicKey(1023));
             PrivateKey privateKey3 = _keyGenerator.GeneratePrivateKey(_keyGenerator.GeneratePublicKey(15));
 
-            CollectionAssert.Contains(new[] { 506, 507, 508, 509, 510, 511, 512 }, privateKey1.d.GetBitLength());
-            CollectionAssert.Contains(new[] { 1020, 1021, 1022, 1023 }, privateKey2.d.GetBitLength());
-            CollectionAssert.Contains(new[] { 11, 12, 13, 14, 15 }, privateKey3.d.GetBitLength());
+            Assert.GreaterOrEqual(privateKey1.d.GetBitLength(), 500);
+            Assert.GreaterOrEqual(privateKey2.d.GetBitLength(), 1000);
+            Assert.GreaterOrEqual(privateKey3.d.GetBitLength(), 10);
+
         }
     }
 }

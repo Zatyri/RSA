@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Numerics;
 using System.Text;
 using System.Text.Unicode;
@@ -14,14 +15,9 @@ namespace RSA_console_app
         static void Main(string[] args)
         {
             bool closeApp = false;
-            string keyBasePath = "";
+            string keyBaseDirectory = "";
 
-            IOService ioService = new IOService(
-                new KeyGeneration(
-                    new PrimeService()
-                    )); 
-
-
+            KeyGeneration keyGenerator = new KeyGeneration(new PrimeService());
 
             Console.WriteLine("Welcome to RSA console app");
             while (!closeApp)
@@ -30,9 +26,38 @@ namespace RSA_console_app
                 switch (Console.ReadLine())
                 {
                     case "keys":
-                        keyBasePath = ioService.GenerateKeyPair();
+                        int bitSize = IOService.GetBitSize();
+                        keyBaseDirectory = IOService.GetPath("keys");
+
+                        (PublicKey, PrivateKey) keyPair = keyGenerator.GetPublicAndPrivateKeyPair(bitSize);
+
+                        FileService.WritePublicKey(keyPair.Item1, keyBaseDirectory);
+                        FileService.WritePrivateKey(keyPair.Item2, keyBaseDirectory);
+
+                        Console.WriteLine($"New public and private keypair generated at \"{keyBaseDirectory}\"");
+
                         break;
                     case "encrypt":
+                        string publicKeyPath = IOService.GetPath("public key");
+                        PublicKey publicKey = FileService.ReadPublicKey(publicKeyPath);
+                        string messagePath = IOService.GetPath("encrypted message");
+                        string message = IOService.GetMessageToEncrypt();
+
+                        string encryptedMessage = CryptographyService.EncryptMessage(message, publicKey);
+                        messagePath = FileService.WriteMessage(encryptedMessage, messagePath);
+
+                        Console.WriteLine($"Message \"{message}\" has been encrypted and saved to \"{messagePath}\"");
+                        break;
+                    case "decrypt":
+                        string privateKeyPath = IOService.GetPath("private key");
+                        PrivateKey privateKey = FileService.ReadPrivateKey(privateKeyPath);
+
+                        string encryptedMessagePath = IOService.GetFilePath("encrypted");
+                        string messageToDecrypt = FileService.ReadMessage(encryptedMessagePath);
+                        string decyptedMessage = CryptographyService.DecryptMessage(messageToDecrypt, privateKey);
+
+                        Console.WriteLine($"Message decrypted: {decyptedMessage}");
+
                         break;
                     case "help":
                         Console.WriteLine("Help is on the way");
@@ -45,36 +70,6 @@ namespace RSA_console_app
                         break;
                 }
             }
-            //KeyGeneration keyGeneration = new KeyGeneration(new PrimeService());
-
-            //(PublicKey, PrivateKey) keyPair = keyGeneration.GetPublicAndPrivateKeyPair(89);
-
-            //FileService.WritePublicKey(keyPair.Item1);
-            //FileService.WritePrivateKey(keyPair.Item2);
-            //PublicKey publicKey = FileService.ReadPublicKey();
-            //PrivateKey privateKey = FileService.ReadPrivateKey();
-
-            //string message = "Hello World";
-
-            //byte[] plaintext = ASCIIEncoding.UTF8.GetBytes(message);
-            //BigInteger pt = new BigInteger(plaintext);
-            //var a = pt.ToString().Length;
-            //if (pt > publicKey.n)
-            //    throw new Exception();
-            //Console.WriteLine("before:  " + pt);
-
-            //BigInteger ct = BigInteger.ModPow(pt, publicKey.e, publicKey.n);
-            //Console.WriteLine("Encoded:  " + ct);
-            //Console.WriteLine(ASCIIEncoding.UTF8.GetString(ct.ToByteArray()));
-
-            //BigInteger dc = BigInteger.ModPow(ct, privateKey.d, privateKey.n);
-            //Console.WriteLine("Decoded:  " + dc);
-            
-            //string decoded = ASCIIEncoding.UTF8.GetString(dc.ToByteArray());
-            //Console.WriteLine("As ASCII: " + decoded);
-
         }
-
-        
     }
 }

@@ -31,6 +31,8 @@ namespace RSA_console_app.services
         /// <returns>A public key with desired bit size</returns>
         internal PublicKey GeneratePublicKey(int bitSize)
         {
+            if (bitSize % 2 == 1) bitSize++;
+
             BigInteger[] primes = primeService.GetTwoPrimes(bitSize / 2);
 
             BigInteger n = primes[0] * primes[1];

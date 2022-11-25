@@ -18,12 +18,12 @@ namespace RSA_console_app.services
             try
             {
 
-                if (path != null && !Directory.Exists(path))
+                if (!string.IsNullOrWhiteSpace(path) && !Directory.Exists(path))
                 {
                     throw new FileNotFoundException("Given path does not exist");
                 }
 
-                path = path == null ? "key.pub" : $"{path}/key.pub";
+                path = string.IsNullOrWhiteSpace(path) ? "key.pub" : $"{path}/key.pub";
 
                 string[] lines =
                 {
@@ -46,7 +46,7 @@ namespace RSA_console_app.services
         {
             try
             {
-                path = path == null ? "key.pub" : $"{path}/key.pub";
+                path = string.IsNullOrWhiteSpace(path) ? "key.pub" : $"{path}/key.pub";
 
                 if (!File.Exists(path))
                 {
@@ -84,12 +84,12 @@ namespace RSA_console_app.services
         {
             try
             {
-                if (path != null && !Directory.Exists(path))
+                if (!string.IsNullOrWhiteSpace(path) && !Directory.Exists(path))
                 {
                     throw new FileNotFoundException("Given path does not exist");
                 }
 
-                path = path == null ? "key.priv" : $"{path}/key.priv";
+                path = string.IsNullOrWhiteSpace(path) ? "key.priv" : $"{path}/key.priv";
 
                 string[] lines =
             {
@@ -111,7 +111,7 @@ namespace RSA_console_app.services
         {
             try
             {
-                path = path == null ? "key.priv" : $"{path}/key.priv";
+                path = string.IsNullOrWhiteSpace(path) ? "key.priv" : $"{path}/key.priv";
 
                 if (!File.Exists(path))
                 {
@@ -145,5 +145,46 @@ namespace RSA_console_app.services
             }
         }
 
+        internal static string WriteMessage(string message, string path)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(path) && !Directory.Exists(path))
+                {
+                    throw new FileNotFoundException("Given path does not exist");
+                }
+
+                path = string.IsNullOrWhiteSpace(path) ? $"{Directory.GetCurrentDirectory()}\\message.txt" : $"{path}\\message.txt";
+
+                File.WriteAllText(path, message);               
+
+                return path;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error writing message to file. {e.ToString()}");
+            }
+        }
+
+        internal static string ReadMessage(string path)
+        {
+            try
+            {               
+                if (!File.Exists(path))
+                {
+                    throw new FileNotFoundException($"Message does not exist at: {path}");
+                }
+
+                string[] lines = File.ReadAllLines(path);
+                string message = String.Join("", lines);
+
+                return message;
+                
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error reading private key from file. {e.ToString()}");
+            }
+        }
     }
 }
