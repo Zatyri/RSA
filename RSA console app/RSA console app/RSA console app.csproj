@@ -13,10 +13,4 @@
     <PackageReference Include="BuildTools.FxCop" Version="1.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="SandcastleBuilder.Utils">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Tools\SandcastleBuilder.Utils.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
