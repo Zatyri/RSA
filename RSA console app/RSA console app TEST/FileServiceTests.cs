@@ -177,7 +177,7 @@ namespace RSA_console_app.Tests
 
             FileService.WriteMessage(message, "");
 
-            string output = FileService.ReadMessage("message.txt");
+            string output = FileService.ReadMessage($"{Directory.GetCurrentDirectory()}\\message.txt");
 
             Assert.AreEqual(message, output);
 
