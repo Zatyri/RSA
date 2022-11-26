@@ -20,7 +20,7 @@ Testit on laadittu tarkistamaan palauttavatko salaus ja purkaus metodit oikean m
 Testejä on helppo toistaa ajamalla yksikkötestit.
 
 ## Käyttäjäsyötteet
-Ohjelman käyttäjäsyöte osiot ovat testattu manuaalisesti ajamalla ohjelma paikallisesti ja antamalle ohjelmalle syötteitä.
+Ohjelman käyttäjäsyöte osiot ovat testattu manuaalisesti ajamalla ohjelma paikallisesti ja antamalla ohjelmalle syötteitä.
 
 
 
