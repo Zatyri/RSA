@@ -40,3 +40,5 @@ https://www.educative.io/answers/what-is-the-rsa-algorithm
 https://www.comparitech.com/blog/information-security/rsa-encryption/
 
 https://rosettacode.org/wiki/RSA_code
+
+https://medium.com/asecuritysite-when-bob-met-alice/so-how-does-padding-work-in-rsa-6b34a123ca1f
