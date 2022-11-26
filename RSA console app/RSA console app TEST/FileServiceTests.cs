@@ -169,5 +169,22 @@ namespace RSA_console_app.Tests
                 File.Delete("key.priv");
             }
         }
+
+        [Test]
+        public void MessageCanBeWrittenAndRead()
+        {
+            string message = "Hello world";
+
+            FileService.WriteMessage(message, "");
+
+            string output = FileService.ReadMessage("message.txt");
+
+            Assert.AreEqual(message, output);
+
+            if (File.Exists("message.txt"))
+            {
+                File.Delete("message.txt");
+            }
+        }
     }
 }

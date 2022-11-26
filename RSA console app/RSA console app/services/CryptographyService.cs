@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace RSA_console_app.services
 {
+    /// <summary>
+    /// Class for encrypting and decrypting messages
+    /// </summary>
     public static class CryptographyService
     {
 
@@ -31,21 +34,22 @@ namespace RSA_console_app.services
 
             BigInteger encryptedNumber = BigInteger.ModPow(plaintextAsNumber, publicKey.e, publicKey.n);
 
-            //return Convert.ToBase64String(encryptedNumber.ToByteArray());
-            return encryptedNumber.ToString();
+            return Convert.ToBase64String(encryptedNumber.ToByteArray());
         }
-
+        /// <summary>
+        /// Decrypts the given encrypted message with given private key
+        /// </summary>
+        /// <param name="encryptedMessage">The message to decrypt</param>
+        /// <param name="privateKey">The private key to decrypt the message with</param>
+        /// <returns>The decryted message</returns>
         public static string DecryptMessage(string encryptedMessage, PrivateKey privateKey)
         {
-            //byte[] messageAsBytes = Convert.FromBase64String(encryptedMessage);
-            //byte[] messageAsBytes = BigInteger.Parse(encryptedMessage).ToByteArray();
+            byte[] messageAsBytes = Convert.FromBase64String(encryptedMessage);
 
-            //BigInteger messageAsNumber = new BigInteger(messageAsBytes);
-            BigInteger messageAsNumber = BigInteger.Parse(encryptedMessage);
+            BigInteger messageAsNumber = new BigInteger(messageAsBytes);
 
             BigInteger dc = BigInteger.ModPow(messageAsNumber, privateKey.d, privateKey.n);
 
-            //byte[] test = dc.ToByteArray();
             string decodedMessage = ASCIIEncoding.UTF8.GetString(dc.ToByteArray());
 
             return decodedMessage;

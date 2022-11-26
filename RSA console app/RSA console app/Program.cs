@@ -60,13 +60,17 @@ namespace RSA_console_app
 
                         break;
                     case "help":
-                        Console.WriteLine("Help is on the way");
+                        Console.WriteLine("Commands:");
+                        Console.WriteLine("Generate public and private keypair: \"keys\"");
+                        Console.WriteLine("Encrypt message: \"encrypt\"");
+                        Console.WriteLine("Decrypt message: \"decrypt\"");
+                        Console.WriteLine("Exit application: \"exit\"");
                         break;
                     case "exit":
                         closeApp = true;
                         break;
                     default:
-                        Console.WriteLine("Need help?");
+                        Console.WriteLine("Need help? type \"help\"");
                         break;
                 }
             }
