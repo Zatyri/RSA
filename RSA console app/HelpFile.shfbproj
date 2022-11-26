@@ -21,9 +21,9 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="RSA console app\bin\Debug\net6.0\RSA console app.xml" />
 <DocumentationSource sourceFile="RSA console app\bin\Debug\net6.0\RSA console app.dll" /></DocumentationSources>
-    <HelpFileFormat>Markdown</HelpFileFormat>
-    <SyntaxFilters>C#, F#</SyntaxFilters>
-    <PresentationStyle>Markdown</PresentationStyle>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <SyntaxFilters>C#</SyntaxFilters>
+    <PresentationStyle>VS2013</PresentationStyle>
     <CleanIntermediates>True</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
