@@ -21,6 +21,9 @@ Testit ajat parheiten "Test Explorer" ikkunan kautta. Test Exporer ikkunan saat 
 ### Visual Studio Code + C# extension
 Minulla ei ole tästä paljonkaan kokemusta. [Tästä](https://code.visualstudio.com/docs/languages/csharp) löydät viralliset ohjeet.
 
+## Koodin helpfile
+Help tiedosto löytyy polusta ./RSA/RSA console app/Help/Documentation.chm
+
 # RSA console app käyttöohje
 ## Komennot
 ### keys
