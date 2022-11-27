@@ -20,7 +20,8 @@
     <Language>en-US</Language>
     <DocumentationSources>
       <DocumentationSource sourceFile="RSA console app\bin\Debug\net6.0\RSA console app.xml" />
-<DocumentationSource sourceFile="RSA console app\bin\Debug\net6.0\RSA console app.dll" /></DocumentationSources>
+      <DocumentationSource sourceFile="RSA console app\bin\Debug\net6.0\RSA console app.dll" />
+    </DocumentationSources>
     <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <SyntaxFilters>C#</SyntaxFilters>
     <PresentationStyle>VS2013</PresentationStyle>
@@ -42,9 +43,10 @@
     <ProjectSummary>RSA console app</ProjectSummary>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="RSA_console_app" isDocumented="True">Main</NamespaceSummaryItem>
-<NamespaceSummaryItem name="RSA_console_app.models" isDocumented="True" />
-<NamespaceSummaryItem name="RSA_console_app.services" isDocumented="True" />
-<NamespaceSummaryItem name="(global)" isDocumented="False">Summaries</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="RSA_console_app.models" isDocumented="True" />
+      <NamespaceSummaryItem name="RSA_console_app.services" isDocumented="True" />
+      <NamespaceSummaryItem name="(global)" isDocumented="False">Summaries</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, InheritedFrameworkInternalMembers, InheritedFrameworkPrivateMembers, Internals, Privates, PrivateFields, Protected, SealedProtected, ProtectedInternalAsProtected, NoPIATypes, PublicCompilerGenerated, EditorBrowsableNever, NonBrowsable, InternalAndPrivateIfExternal</VisibleItems>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
