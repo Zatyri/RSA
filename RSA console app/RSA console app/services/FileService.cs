@@ -13,6 +13,12 @@ namespace RSA_console_app.services
     /// </summary>
     public class FileService
     {
+        /// <summary>
+        /// Writes the public key to a file
+        /// </summary>
+        /// <param name="publicKey">The public key to be written</param>
+        /// <param name="path">Path to write file</param>
+        /// <exception cref="Exception"></exception>
         internal static void WritePublicKey(PublicKey publicKey, string? path = null)
         {
             try
@@ -41,7 +47,12 @@ namespace RSA_console_app.services
                 throw new Exception($"Error writing public key to file. {e.ToString()}");
             }
         }
-
+        /// <summary>
+        /// Reads the public key from a file
+        /// </summary>
+        /// <param name="path">Path to the file</param>
+        /// <returns>The public key</returns>
+        /// <exception cref="Exception"></exception>
         internal static PublicKey ReadPublicKey(string? path = null)
         {
             try
@@ -79,7 +90,12 @@ namespace RSA_console_app.services
                 throw new Exception($"Error reading public key from file. {e.ToString()}");
             }
         }
-
+        /// <summary>
+        /// Writes the private key to a file
+        /// </summary>
+        /// <param name="privateKey">The private key to be written to a file</param>
+        /// <param name="path">Path to write the file to</param>
+        /// <exception cref="Exception"></exception>
         internal static void WritePrivateKey(PrivateKey privateKey, string? path = null)
         {
             try
@@ -106,7 +122,12 @@ namespace RSA_console_app.services
                 throw new Exception($"Error writing private key to file. {e.ToString()}");
             }
         }
-
+        /// <summary>
+        /// Reads the private key from a file
+        /// </summary>
+        /// <param name="path">Path to the file</param>
+        /// <returns>The private key</returns>
+        /// <exception cref="Exception"></exception>
         internal static PrivateKey ReadPrivateKey(string? path = null)
         {
             try
@@ -144,7 +165,13 @@ namespace RSA_console_app.services
                 throw new Exception($"Error reading private key from file. {e.ToString()}");
             }
         }
-
+        /// <summary>
+        /// Writes a message to a file
+        /// </summary>
+        /// <param name="message">The message to be written to the file</param>
+        /// <param name="path">The path where the file should be</param>
+        /// <returns>The path the file was written to</returns>
+        /// <exception cref="Exception"></exception>
         internal static string WriteMessage(string message, string path)
         {
             try
@@ -165,7 +192,12 @@ namespace RSA_console_app.services
                 throw new Exception($"Error writing message to file. {e.ToString()}");
             }
         }
-
+        /// <summary>
+        /// Reads a string from a file
+        /// </summary>
+        /// <param name="path">The path to the file</param>
+        /// <returns>The message</returns>
+        /// <exception cref="Exception"></exception>
         internal static string ReadMessage(string path)
         {
             try

@@ -25,9 +25,11 @@ namespace RSA_console_app.services
         {
             byte[] plaintext = ASCIIEncoding.UTF8.GetBytes(messageToEncrypt);
 
-            BigInteger plaintextAsNumber = new BigInteger(plaintext);
+            plaintext = AddPKSCPadding(plaintext, publicKey.n.GetByteCount());
 
-            if (plaintextAsNumber > publicKey.n)
+            BigInteger plaintextAsNumber = new BigInteger(plaintext);
+            
+            if (plaintextAsNumber >= publicKey.n)
             {
                 throw new Exception("Message too long for given key");
             }
@@ -48,11 +50,67 @@ namespace RSA_console_app.services
 
             BigInteger messageAsNumber = new BigInteger(messageAsBytes);
 
-            BigInteger dc = BigInteger.ModPow(messageAsNumber, privateKey.d, privateKey.n);
+            BigInteger decryptedCipher = BigInteger.ModPow(messageAsNumber, privateKey.d, privateKey.n);
 
-            string decodedMessage = ASCIIEncoding.UTF8.GetString(dc.ToByteArray());
+            byte[] messageAsByteArray = RemovePKSCPadding(decryptedCipher.ToByteArray());
+
+            string decodedMessage = ASCIIEncoding.UTF8.GetString(messageAsByteArray);
+
 
             return decodedMessage;
+        }
+
+
+        /// <summary>
+        /// Adds PKSC#1.5 padding to the message
+        /// </summary>
+        /// <param name="message">Message to add padding to</param>
+        /// <param name="sizeOfN">Size of n</param>
+        /// <returns>The inputted message with padding</returns>
+        /// <exception cref="Exception">If messag etoo long for given size of n</exception>
+        internal static byte[] AddPKSCPadding(byte[] message, long sizeOfN)
+        {
+            if((message.Length + 11) > sizeOfN)
+            {
+                throw new Exception("Message too long for given public key");
+            }
+            long randomBits = sizeOfN - (message.Length + 3) ;
+            byte[] padding = new byte[randomBits];
+            Random random = new Random();
+
+            padding[0] = 0x00;
+            padding[1] = 0x02;
+
+            for(int i = 2; i < padding.Length - 1; i++)
+            {                                   
+                padding[i] = (byte)random.Next(1,256);
+            }
+
+            padding[padding.Length - 1] = 0x00;
+
+            byte[] paddedMessage = padding.Concat(message).ToArray();
+
+            return paddedMessage;
+        }
+
+        /// <summary>
+        /// Removes PKSC#1.5 from message
+        /// </summary>
+        /// <param name="paddedMessage">The message to remove padding from</param>
+        /// <returns>The message without padding</returns>
+        /// <exception cref="Exception">If message not properly formatted</exception>
+        internal static byte[] RemovePKSCPadding(byte[] paddedMessage)        {
+
+            if (paddedMessage[0] != (Byte)0x00 || paddedMessage[1] != (Byte)0x02)
+            {
+                throw new Exception("Message is not padded or has invalid formatting");
+            }
+
+            int messageStartsAtIndex = Array.IndexOf(paddedMessage, (Byte)0x00, 1) + 1;
+
+            byte[] message = paddedMessage[messageStartsAtIndex..];
+
+            return message;
         }
     }
 }

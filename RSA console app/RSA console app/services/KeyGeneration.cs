@@ -13,17 +13,6 @@ namespace RSA_console_app.services
     /// </summary>
     public class KeyGeneration
     {
-        private PrimeService primeService;
-
-        /// <summary>
-        /// The constructor for the key generation class
-        /// </summary>
-        /// <param name="primeService">A service that generates primes</param>
-        public KeyGeneration(PrimeService primeService)
-        {
-            this.primeService = primeService;
-        }
-
         /// <summary>
         /// Generates a public key with desired bit size
         /// </summary>
@@ -33,7 +22,7 @@ namespace RSA_console_app.services
         {
             if (bitSize % 2 == 1) bitSize++;
 
-            BigInteger[] primes = primeService.GetTwoPrimes(bitSize / 2);
+            BigInteger[] primes = PrimeService.GetTwoPrimes(bitSize / 2);
 
             BigInteger n = primes[0] * primes[1];
 
