@@ -13,7 +13,7 @@ namespace RSA_console_app.Tests
         [SetUp]
         public void SetUp()
         {
-            _keyGenerator = new KeyGeneration(new PrimeService());
+            _keyGenerator = new KeyGeneration();
         }
         [Test]
         public void GeneratePublicKey_returns_publicKeyObject()

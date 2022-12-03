@@ -1,6 +1,7 @@
 ﻿using RSA_console_app.models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace RSA_console_app.services
 
                 if (!Directory.Exists(path))
                 {
-                    Console.WriteLine("Directory does not exist. Provide an existing directory or leave empty");
+                    Console.WriteLine("Directory does not exist. Provide an existing directory or leave empty for application root directory");
                 }
                 else
                 {
@@ -60,7 +61,7 @@ namespace RSA_console_app.services
 
                 if (!File.Exists(path))
                 {
-                    Console.WriteLine("File not found. Please provide correct path to file");
+                    Console.WriteLine("File not found. Please provide an existing path to file");
                 }
                 else
                 {
@@ -73,12 +74,12 @@ namespace RSA_console_app.services
         /// <summary>
         /// Gets the desired key bit size from the user
         /// </summary>
-        /// <returns></returns>
-        public static int GetBitSize()
+        /// <returns>The bitsize as an integer</returns>
+        public static int GetBitSize(int def = 1024, string text = "Give key bit size.")
         {
-            Console.WriteLine("Give key bit size. (default = 1024)");
+            Console.WriteLine($"{text} (default = {def})");
 
-            int bitSize = 1024;
+            int bitSize = def;
             while (true)
             {
                 string? input = Console.ReadLine();
@@ -91,7 +92,7 @@ namespace RSA_console_app.services
                 }
                 else
                 {
-                    Console.WriteLine("Please provide a valid number");
+                    Console.WriteLine($"{input} is not a valid number. Please provide a valid number. Valid numbers are positive integers");
                 }
 
             }
@@ -124,6 +125,36 @@ namespace RSA_console_app.services
             return message;
         }
 
+        /// <summary>
+        /// Asks user for a boolean value (Yes or No)
+        /// </summary>
+        /// <param name="text">Guide text for what purpose value is asked</param>
+        /// <param name="def">Default value (if nothing entered)</param>
+        /// <returns>true if user replies "Yes", false if user replies "No"</returns>
+        public static bool GetBoolean(string text, bool def)
+        {
+            Console.WriteLine($"{text} (default = {def})");
+            bool value = def;
+            while (true)
+            {
+                Console.WriteLine($"Press Y for Yes or N for No (blank = {(def ? "Yes" : "No")})");
+                string? input = Console.ReadLine();
+                if (string.IsNullOrEmpty(input))
+                {                    
+                    break;
+                } else if (input.ToLower().Equals("y"))
+                {
+                    value = true;
+                    break;
+                } else if (input.ToLower().Equals("n"))
+                {
+                    value = false;
+                    break;
+                }
+            }
+            return value;
+        }
+    
 
     }
 }

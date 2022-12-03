@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
@@ -12,7 +13,7 @@ namespace RSA_console_app.services
     /// <summary>
     /// Service for generating prime numbers
     /// </summary>
-    public class PrimeService
+    public static class PrimeService
     {
         /// <summary>
         /// Generates two random prime numbers with desired bit length
@@ -20,7 +21,7 @@ namespace RSA_console_app.services
         /// <param name="bits">The length of the numbers in bits</param>
         /// <param name="rounds">Optional parameter to modify certainty of the the numbers to be prime</param>
         /// <returns>Array of two prime numbers</returns>
-        public BigInteger[] GetTwoPrimes(int bits, int rounds = 40)
+        public static BigInteger[] GetTwoPrimes(int bits, int rounds = 40)
         {
             BigInteger[] randomNumbers = GetTwoRandomOddNumbers(bits);
 
@@ -28,10 +29,11 @@ namespace RSA_console_app.services
             while (!IsNumberPrime(prime1, rounds))
             {
                 prime1 += 2;
+
             }
 
             BigInteger prime2 = randomNumbers[1];
-            while (!IsNumberPrime(prime2, rounds))
+            while (!IsNumberPrime(prime2, rounds) || prime1 == prime2)
             {
                 prime2 += 2;
             }
@@ -40,16 +42,60 @@ namespace RSA_console_app.services
         }
 
         /// <summary>
+        /// Method for testing the Prime generation algorithm. Method takes various inputs to configure tests
+        /// </summary>
+        /// <param name="bits">Bit size of the prime to be generated</param>
+        /// <param name="rounds">How many times Miller-Rabin tests for primality</param>
+        /// <param name="testAmount">How many tests to run (More tests takes longer)</param>
+        /// <param name="usePreCheck">Choose whether or not to use prime pre check before Miller-Rabin algorithm</param>
+        public static void TestPrimeAlgorithm(int bits, int rounds = 40, int testAmount = 1, bool usePreCheck = true)
+        {
+            if(testAmount < 1) testAmount = 1;
+
+            List<long> loggedTimes = new List<long>();
+            List<int> timesIncremented = new List<int>();
+
+            Stopwatch watch = new System.Diagnostics.Stopwatch();
+            for (int i = 0; i < rounds; i++)
+            {
+                watch.Reset();
+                int j = 0;
+
+                watch.Start();
+
+                BigInteger randomNumber = GetTwoRandomOddNumbers(bits)[0];
+
+                while (!IsNumberPrime(randomNumber, rounds, usePreCheck:usePreCheck))
+                {
+                    randomNumber += 2;
+                    j++;
+                }
+
+                watch.Stop();
+                loggedTimes.Add(watch.ElapsedMilliseconds);
+                timesIncremented.Add(j);
+            }
+
+
+            Console.WriteLine($"Prime number was found in {loggedTimes.Average()} ms");
+            Console.WriteLine($"Prime number candidate incremented {timesIncremented.Average()} before prime number was found");
+        }
+
+        /// <summary>
         /// Checks if given number is a prime number
         /// </summary>
         /// <param name="primeCandidate">The number to test for primality</param>
         /// <param name="rounds">How many times to perform the test on the number</param>
+        /// <param name="usePreCheck">Indicate if prime check should include precheck</param>
         /// <returns>False if primeCandidate is composite. True if primeCandidate is probably a prime (not 100% accuracy)</returns>
-        internal bool IsNumberPrime(BigInteger primeCandidate, int rounds)
+        internal static bool IsNumberPrime(BigInteger primeCandidate, int rounds, bool usePreCheck = true)
         {
             if (primeCandidate == 2 || primeCandidate == 3)
                 return true;
             if (primeCandidate < 2 || primeCandidate % 2 == 0)
+                return false;
+
+            if (usePreCheck && !PrimePreCheck(primeCandidate))
                 return false;
 
             BigInteger powValue = CalculateInitialPowerValue(primeCandidate - 1);
@@ -68,12 +114,37 @@ namespace RSA_console_app.services
         }
 
         /// <summary>
+        /// Checks if the prime candidate can be devided by a set of small prime numbers
+        /// </summary>
+        /// <param name="primeCandidate">The number to check for primality</param>
+        /// <returns>False if prime candidate is not a prime. True if there is a possibility it is a prime</returns>
+        internal static bool PrimePreCheck(BigInteger primeCandidate)
+        {
+            int[] hundredFirstPrimes = new int[] { 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557 };
+
+            bool couldBePrime = true;
+
+            for(int i = 0; i < hundredFirstPrimes.Length; i++)
+            {
+                if (primeCandidate == hundredFirstPrimes[i]) break;
+
+                if(primeCandidate % hundredFirstPrimes[i] == 0)
+                {
+                    couldBePrime = false;
+                    break;
+                }
+            }
+
+            return couldBePrime;
+        }
+
+        /// <summary>
         /// The Miller-Rabin Primality test identifies if the given number is a composite
         /// </summary>
         /// <param name="powValue">A odd number that sitisfies powValue*2^r = primeCandidate - 1 for some r >= 1</param>
         /// <param name="primeCandidate">The number to test if composite</param>
         /// <returns>False if primeCandidate is composite. True if primeCandidate is probably a prime (not 100% accuracy)</returns>
-        internal bool MillerRabinPrimalityTest(BigInteger powValue, BigInteger primeCandidate)
+        internal static bool MillerRabinPrimalityTest(BigInteger powValue, BigInteger primeCandidate)
         {
             BigInteger randomNumber = GetRandomNumber(primeCandidate);
 
@@ -82,7 +153,7 @@ namespace RSA_console_app.services
             if (value == 1 || value == primeCandidate - 1)
                 return true;
 
-            while (powValue != primeCandidate - 1)
+            while (powValue <= primeCandidate - 1)
             {
                 value = BigInteger.ModPow(value, 2, primeCandidate);
                 powValue = powValue * 2;
@@ -99,12 +170,15 @@ namespace RSA_console_app.services
         /// Calculates the initial number d, for raising 2^d in the Miller-Rabin test.
         /// The function assumes that the input number is even. Given an odd number will the number itself be returned
         /// </summary>
-        /// <param name="numbern">An odd number that is n-1, where n is the number to test for primality</param>
+        /// <param name="number">An odd number that is n-1, where n is the number to test for primality</param>
         /// <returns>The number d, for raising 2^d in the Miller-Rabin test</returns>
-        internal BigInteger CalculateInitialPowerValue(BigInteger numbern)
+        internal static BigInteger CalculateInitialPowerValue(BigInteger number)
         {
-
-            BigInteger result = numbern;
+            if(number < 2)
+            {
+                return number;
+            }
+            BigInteger result = number;
             while (result % 2 == 0)
             {
                 result = BigInteger.Divide(result, 2);
@@ -118,7 +192,7 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="bits">Length of the BigIntegers in bits</param>
         /// <returns>A BigInteger array containing two random BigIntegers</returns>
-        internal BigInteger[] GetTwoRandomOddNumbers(int bits)
+        internal static BigInteger[] GetTwoRandomOddNumbers(int bits)
         {
             int offset = (bits % 8);
             if (offset != 0) offset = 8 - offset;
@@ -166,7 +240,7 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="number">Max size - 1 of the number to return</param>
         /// <returns>A random BigInteger</returns>
-        internal BigInteger GetRandomNumber(BigInteger number)
+        internal static BigInteger GetRandomNumber(BigInteger number)
         {
             int offset = 0;
             int bitLength = (int)(number - 1).GetBitLength();
