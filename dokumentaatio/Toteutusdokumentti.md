@@ -44,8 +44,8 @@ Aikavaativuus on O(n)
 6. Jos Miller-Rabin testi palauttaa epätosi. Lisää lukuun 2 ja suorita testi uudelleen kunnes Miller-Rabin testi palauttaa tosi k kertaa - O(n)
 7. Toista kohdata 1-6 toiselle alkuluvulle - Lisää tarkistus että toinen löydetty alkuluku ei ole sama kuin ensimmäinen. Jos on lisää kaksi lukuun ja jatka kohtaa 6. kunnes löytyy toinen alkuluku
 ```
-Tilavaativuus on O(n)
-Aikavaativuus on O(n + log n)
+Tilavaativuus on O(1)
+Aikavaativuus on O(k + n + log^2 n)
 
 ### Miller-Rabin testi
 ```
@@ -55,11 +55,16 @@ Aikavaativuus on O(n + log n)
 4. Nosta jakojäännös potenssiin 2 ja laske jakojäännös testattavalla luvulla kunnes jakojäännös on 1 ja palauta epätosi tai laskettava luku - 1 on yhtä kuin jakojäännös ja palauta tosi. Kertaa joka kerralla p kahdella ja lopeta jos p on yhtä kuin testattava luku - 1 ja palauta epätosi - O(log n) 
 ```
 Jos testi palauttaa epätosi on testattava luku 100% varmuudella yhdistelmäluku ja jos testi palauttaa tosi on testattava luku todennäköisesti alkuluku 
-Tilavaativuus on O(n)
+Tilavaativuus on O(1)
 Aikavaativuus on O(n + log n)
 
+### Aika- ja tilavaativuudet ydistettynä
+Tilavaativuus kokonaisuutena ja sisällyttäen satunnaisten lukujen luonnin on O(n). Testaus algoritmien osuus on O(1)
+
+Aikavaativuus on O(k + n + log n)
+
 ## Suorituskyky- ja O-analyysivertailu
-(todo-listalla)
+
 
 ## Puutteet ja parannusehdotukset
 (todo-listalla
