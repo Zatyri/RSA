@@ -1,4 +1,3 @@
-coverage:
-    ignore: 
-        - "**/Program.cs"
-        - "**/IOService.cs"
+ignore: 
+    - "**/Program.cs"
+    - "**/IOService.cs"
