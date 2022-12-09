@@ -1,0 +1,4 @@
+codecov:
+    ignore: 
+        - "**/Program.cs"
+        - "**/IOService.cs"

@@ -114,7 +114,7 @@ namespace RSA_console_app.services
         }
 
         /// <summary>
-        /// Checks if the prime candidate can be devided by a set of small prime numbers
+        /// Checks if the prime candidate can be divided by a set of small prime numbers
         /// </summary>
         /// <param name="primeCandidate">The number to check for primality</param>
         /// <returns>False if prime candidate is not a prime. True if there is a possibility it is a prime</returns>

@@ -31,7 +31,7 @@ namespace RSA_console_app.services
 
             while (e < phi)
             {
-                if (Helpers.gcd(e, phi) == 1)
+                if (Helpers.GreatestCommonDivisor(e, phi) == 1)
                 {
                     break;
                 }

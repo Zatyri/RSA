@@ -10,21 +10,21 @@ namespace RSA_console_app
         /// <summary>
         /// Calculates greatest common divisor
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static BigInteger gcd(BigInteger a, BigInteger b)
+        /// <param name="numberOne">Number one</param>
+        /// <param name="numberTwo">Number two</param>
+        /// <returns>The greatest common divisor of the two given numbers</returns>
+        public static BigInteger GreatestCommonDivisor(BigInteger numberOne, BigInteger numberTwo)
         {
             BigInteger temp;
             while (true)
             {
-                temp = a % b;
+                temp = numberOne % numberTwo;
                 if (temp == 0)
                 {
-                    return b;
+                    return numberTwo;
                 }
-                a = b;
-                b = temp;
+                numberOne = numberTwo;
+                numberTwo = temp;
             }
         }
     }
