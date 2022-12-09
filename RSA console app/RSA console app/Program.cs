@@ -32,6 +32,7 @@ namespace RSA_console_app
                         }
                         catch (Exception e)
                         {
+
                             Console.WriteLine($"Error generating keys. Please try again. ({e.Message})");
                         }
                         break;

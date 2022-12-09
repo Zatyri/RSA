@@ -160,5 +160,11 @@ namespace RSA_console_app.Tests
 
             Assert.AreEqual(2, primes.Length);
         }
+
+        [Test]
+        public void TestPrimeAlgorithm_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() => PrimeService.TestPrimeAlgorithm(1024, 5, 2, true));
+        }
     }
 }
