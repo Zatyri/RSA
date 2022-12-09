@@ -154,6 +154,25 @@ namespace RSA_console_app.services
             }
             return value;
         }
+        
+        /// <summary>
+        /// Get string input from user
+        /// </summary>
+        /// <param name="text">Text to display what string is used for</param>
+        /// <param name="def">Default value</param>
+        /// <returns>The userinput, or default value if empty</returns>
+        public static string GetString(string text, string def)
+        {
+            Console.WriteLine($"{text} (default = {def})");
+            string? value = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(value))
+            {
+                return def;
+            }
+
+            return value;
+        }
     
 
     }

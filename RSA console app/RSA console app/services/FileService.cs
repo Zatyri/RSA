@@ -170,9 +170,10 @@ namespace RSA_console_app.services
         /// </summary>
         /// <param name="message">The message to be written to the file</param>
         /// <param name="path">The path where the file should be</param>
+        /// <param name="fileName">The name of the file to create</param>
         /// <returns>The path the file was written to</returns>
         /// <exception cref="Exception"></exception>
-        internal static string WriteMessage(string message, string path)
+        internal static string WriteMessage(string message, string path, string fileName = "message")
         {
             try
             {
@@ -181,7 +182,7 @@ namespace RSA_console_app.services
                     throw new FileNotFoundException("Given path does not exist");
                 }
 
-                path = string.IsNullOrWhiteSpace(path) ? $"{Directory.GetCurrentDirectory()}\\message.txt" : $"{path}\\message.txt";
+                path = string.IsNullOrWhiteSpace(path) ? $"{Directory.GetCurrentDirectory()}\\{fileName}.txt" : $"{path}\\{fileName}.txt";
 
                 File.WriteAllText(path, message);               
 
