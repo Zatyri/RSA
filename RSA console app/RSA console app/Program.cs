@@ -122,11 +122,20 @@ namespace RSA_console_app
 
         internal static void RunBenchmarks()
         {
+            int sieveOfEratosthenesNumber = -1;
             int primeBitSize = IOService.GetBitSize(512, "Give prime bit size");
-            int testRounds = IOService.GetBitSize(20, "How many test runs? ");
+            int testRounds = IOService.GetBitSize(100, "How many test runs? ");
             bool usePreCheck = IOService.GetBoolean("Use prime pre check functionality?", true);
+            if (usePreCheck)
+            {
+                bool useSieveOfEratosthenes = IOService.GetBoolean("Use Sieve of Eratosthenes for pre check primes?", true);
+                if (useSieveOfEratosthenes)
+                {
+                    sieveOfEratosthenesNumber = IOService.GetBitSize(557, "Give number to run Sieve of Eratosthenes on (557 gives 100 primes)");
+                }
+            }
             int rounds = IOService.GetBitSize(40, "How many Miller-Rabin checks on each prime candidate");
-            PrimeService.TestPrimeAlgorithm(primeBitSize, rounds: rounds, testAmount: testRounds, usePreCheck: usePreCheck);
+            PrimeService.TestPrimeAlgorithm(primeBitSize, rounds: rounds, testAmount: testRounds, usePreCheck: usePreCheck, sieveOfEratosthenesNumber);
         }
 
         internal static void Help()

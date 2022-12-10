@@ -48,9 +48,10 @@ namespace RSA_console_app.services
         /// <param name="rounds">How many times Miller-Rabin tests for primality</param>
         /// <param name="testAmount">How many tests to run (More tests takes longer)</param>
         /// <param name="usePreCheck">Choose whether or not to use prime pre check before Miller-Rabin algorithm</param>
-        public static void TestPrimeAlgorithm(int bits, int rounds = 40, int testAmount = 1, bool usePreCheck = true)
+        /// <param name="maxNumber">Uses sieve of Eatosthenes with given number</param>
+        public static void TestPrimeAlgorithm(int bits, int rounds = 40, int testAmount = 1, bool usePreCheck = true, int maxNumber = -1)
         {
-            if(testAmount < 1) testAmount = 1;
+            if (testAmount < 1) testAmount = 1;
 
             List<long> loggedTimes = new List<long>();
             List<int> timesIncremented = new List<int>();
@@ -65,7 +66,7 @@ namespace RSA_console_app.services
 
                 BigInteger randomNumber = GetTwoRandomOddNumbers(bits)[0];
 
-                while (!IsNumberPrime(randomNumber, rounds, usePreCheck:usePreCheck))
+                while (!IsNumberPrime(randomNumber, rounds, usePreCheck: usePreCheck, sieveOfEratosthenesNumber: maxNumber))
                 {
                     randomNumber += 2;
                     j++;
@@ -87,16 +88,26 @@ namespace RSA_console_app.services
         /// <param name="primeCandidate">The number to test for primality</param>
         /// <param name="rounds">How many times to perform the test on the number</param>
         /// <param name="usePreCheck">Indicate if prime check should include precheck</param>
+        /// <param name="sieveOfEratosthenesNumber">If provided, precheck uses Sieve Of Eratosthenes and finds all primes up to this number</param>
         /// <returns>False if primeCandidate is composite. True if primeCandidate is probably a prime (not 100% accuracy)</returns>
-        internal static bool IsNumberPrime(BigInteger primeCandidate, int rounds, bool usePreCheck = true)
+        internal static bool IsNumberPrime(BigInteger primeCandidate, int rounds, bool usePreCheck = true, int sieveOfEratosthenesNumber = -1)
         {
             if (primeCandidate == 2 || primeCandidate == 3)
                 return true;
             if (primeCandidate < 2 || primeCandidate % 2 == 0)
                 return false;
 
-            if (usePreCheck && !PrimePreCheck(primeCandidate))
+            int[]? listOfPrimes = null;
+
+            if(sieveOfEratosthenesNumber > 5)
+            {
+                listOfPrimes = PrimeService.SieveOfEratosthenes(sieveOfEratosthenesNumber);  
+            }
+
+            if (usePreCheck && !PrimePreCheck(primeCandidate, listOfPrimes))
+            {
                 return false;
+            }
 
             BigInteger powValue = CalculateInitialPowerValue(primeCandidate - 1);
 
@@ -117,18 +128,23 @@ namespace RSA_console_app.services
         /// Checks if the prime candidate can be divided by a set of small prime numbers
         /// </summary>
         /// <param name="primeCandidate">The number to check for primality</param>
+        /// <param name="listOfPrimes">List of primes to use in check</param>
         /// <returns>False if prime candidate is not a prime. True if there is a possibility it is a prime</returns>
-        internal static bool PrimePreCheck(BigInteger primeCandidate)
+        internal static bool PrimePreCheck(BigInteger primeCandidate, int[]? listOfPrimes = null )
         {
-            int[] hundredFirstPrimes = new int[] { 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557 };
+            if(listOfPrimes == null)
+            {
+                // Hundred first primes
+                listOfPrimes = new int[] { 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557 };
+            }
 
             bool couldBePrime = true;
 
-            for(int i = 0; i < hundredFirstPrimes.Length; i++)
+            for (int i = 0; i < listOfPrimes.Length; i++)
             {
-                if (primeCandidate == hundredFirstPrimes[i]) break;
+                if (primeCandidate == listOfPrimes[i]) break;
 
-                if(primeCandidate % hundredFirstPrimes[i] == 0)
+                if (primeCandidate % listOfPrimes[i] == 0)
                 {
                     couldBePrime = false;
                     break;
@@ -174,7 +190,7 @@ namespace RSA_console_app.services
         /// <returns>The number d, for raising 2^d in the Miller-Rabin test</returns>
         internal static BigInteger CalculateInitialPowerValue(BigInteger number)
         {
-            if(number < 2)
+            if (number < 2)
             {
                 return number;
             }
@@ -270,7 +286,47 @@ namespace RSA_console_app.services
             if (result < 2) result = 2;
 
             return result;
+        }
 
+        /// <summary>
+        /// Finds all prime numbers up to input number
+        /// </summary>
+        /// <param name="maxNumber">How many numbers to search for primes</param>
+        /// <returns>A list of numbers up to input number</returns>
+        internal static int[] SieveOfEratosthenes(int maxNumber)
+        {
+
+            bool[] isPrime = new bool[maxNumber + 1];
+
+            for (int i = 0; i <= maxNumber; i++)
+            {
+                isPrime[i] = true;
+            }
+
+            for (int j = 2; j * j <= maxNumber; j++)
+            {
+                if (isPrime[j] == true)
+                {
+                    for (int i = j * j; i <= maxNumber; i += j)
+                        isPrime[i] = false;
+                }
+            }
+
+            int primesFound = isPrime.Where((b, i) => i > 3 && b == true).Count();
+
+            int[] primes = new int[primesFound];
+            int primesIndex = 0;
+
+            for (int i = 5; i <= maxNumber; i++)
+            {
+                if (isPrime[i] == true)
+                {
+                    primes[primesIndex] = i;
+                    primesIndex++;
+                }
+            }
+
+            return primes;
         }
     }
 }
