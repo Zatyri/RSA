@@ -22,3 +22,5 @@
 [Viikkoraportti 4](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/viikkoraportit/viikkoraportti%204.md)
 
 [Viikkoraportti 5](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/viikkoraportit/viikkoraportti%205.md)
+
+[Viikkoraportti 6](https://github.com/Zatyri/RSA/blob/main/dokumentaatio/viikkoraportit/viikkoraportti%206.md)
