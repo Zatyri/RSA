@@ -32,8 +32,11 @@ Luo salaisen ja julkisen avainparin ja tallentaa ne tiedostoihin key.pub (julkin
 Salaa annetun viestin ja tallentaa sen tiedostoon. Ohjelma kysyy julkisen aviaimen polkua ja polkua mihin salattu viesti tallennetaan.
 ### decrypt
 Purkaa salatun viestin annetulla salaisella avaimella. Ohjelma kysyy salaisen avaimen polkua ja salatun viestin polkua. Ohjelma tulostaa puretun viestin konsoliin.
+HUOM! voit kirjoittaa pelkän tiedoston nimen (ilman kenoviivaa) jos tiedosto sijaitsee ohjelman juuressa. Muuten pitää koko polku määrittää.
 ### test
-Test komennolla voit testata alkulukujen luonti algoritmia. Mielenkiintoinen testi on vertailla alkulukujen luontia pre-check toiminnolla ja ilman.Koska alkulukujen luonti tapahtuu satunnaisilla numeroilla voi suoritusnopeus vaihdella testien välillä. Tästä syystä voi valita kuinka monta alkulukua ohjelma luo ja saada niistä keskiarvo. HUOM! Suurilla testimäärillä ( yli 30) voi testin suorittamiseen mennä paljonkin aikaa.
+Test komennolla voit testata alkulukujen luonti algoritmia. Mielenkiintoinen testi on vertailla alkulukujen luontia pre-check toiminnolla ja ilman. Pre-check toiminnon voi joko suorittaa Erastostheneen seulalla johonkin lukuun asti, tai kovakoodatulla 100 ensimmäisellä alkuluvulla.
+
+Koska alkulukujen luonti tapahtuu satunnaisilla numeroilla voi suoritusnopeus vaihdella testien välillä. Tästä syystä voi valita kuinka monta alkulukua ohjelma luo ja saada niistä keskiarvo. HUOM! Suurilla testimäärillä ( yli 30) voi testin suorittamiseen mennä paljonkin aikaa. Ilman alkutarkistusta ei ole suositeltavaa tehä enemmän kuin 10 testikertaa.
 ### help
 Ohjelma tulostaa konsoliin komennot
 ### exit
