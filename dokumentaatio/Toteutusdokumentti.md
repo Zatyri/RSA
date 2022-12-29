@@ -64,10 +64,26 @@ Tilavaativuus kokonaisuutena ja sisällyttäen satunnaisten lukujen luonnin on O
 Aikavaativuus on O(k + n + log n)
 
 ## Suorituskyky- ja O-analyysivertailu
+Ohjelman suoritusnopeutta voi testata ohjelmassa "test" komennolla. Testit testaavat alkulukujen luonti algoritmeja. Alla löydät muutamia suoritustuloksia eri asetuksilla.
+### Miller-Rabin testi yksinään (keskiarvo 10 kerrasta)
+512-bittisen alkuluvun löytäminen kestää keskimäärin 312ms
+1024-bittisen alkuluvun löytäminen kestää keskimäärin 1785ms
+### Miller-Rabin + alkutarkistus 100 ensimmäisellä alkuluvulla (kovakoodattu) (keskiarvo 1000 kerrasta)
+512-bittisen alkuluvun löytäminen kestää keskimäärin 137ms
+1024-bittisen alkuluvun löytäminen kestää keskimäärin 621ms
+### Miller-Rabin + Eratostheneen seula joka löytää 100 ensimmäistä alkulukua (keskiarvo 1000 kerrasta)
+512-bittisen alkuluvun löytäminen kestää keskimäärin 141ms
+1024-bittisen alkuluvun löytäminen kestää keskimäärin 616ms
+### Miller-Rabin + Eratostheneen seula joka löytää kaikki alkuluvut alle 1000 (keskiarvo 1000 kerrasta)
+512-bittisen alkuluvun löytäminen kestää keskimäärin 142ms
+1024-bittisen alkuluvun löytäminen kestää keskimäärin 717ms
 
+On mielenkiintoista nähdä että Eratostheneen seulan suurentaminen heikentää algoritmin suorityskykyä. Lyhyiden testien perusteella tapahtuu tämä kun Eratostheneen seulan yläpää nostetaan yli 600.
 
 ## Puutteet ja parannusehdotukset
-(todo-listalla
+Tavoitteena oli tehdä toiminto joka mahdollistaisi Eratosteneen seulan käyttämisen niin, että sille voisi syöttää kuinka monta alkulukua haluaa, eikä "yläpäätä" jonka alta seula löytää kaikki alkuluvut. Algoritmin toteutustavan takia vaatisi tämä jonkun maksimi luvun jonka alta se löytäisi kaikki alkuluvut. Tämä johtaisi siihen että algoritmi olisi yhtä tehokas löytää 100 tai 1000 alkulukua, ja kaipaisi ainakin jonkinlaista tehostusta.
+
+Satunnaisten isojen lukujen generointi ei varmasti ole optimaalisin. Merkittävä aika ohjelman kehittämiseen meni isojen lukujen prosessointiin ja minun oli jossain kohtaa tyydyttävä riittävän toimivaan ratkaisuun.
 
 ## Lähteet
 https://en.wikipedia.org/wiki/RSA_(cryptosystem)
