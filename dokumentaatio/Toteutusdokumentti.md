@@ -5,6 +5,8 @@ Ohjelma on rakennettu käyttämällä palveluluokkia. Jokaisella palveluluokalla
 
 Ohjelman käynnistettyä pyytää pääluokka (Program.cs) komentoja käyttäjältä. Käyttäjän antaman komennon perusteella kutsuu pääluokka erinäisiä palveluluokkia toteuttaakseen komennon.
 
+Ohjelma on toteutettu ja testattu Windows käyttöjärjestelmällä. Vertaisarvioinnissa käytettiin ohjelmaa myös Linux käyttöjärjestelmällä, jolloin se pitäisi toimia molemmilla käyttöjärjestelmillä. 
+
 ## Palveluluokat
 ### IOService (staattinen)
 IOService luokka pyytää käyttäjältä syötteitä, kuten tiedosto polkuja ja numero sekä teksti syötteitä.
