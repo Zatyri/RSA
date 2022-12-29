@@ -67,15 +67,19 @@ Aikavaativuus on O(k + n + log n)
 Ohjelman suoritusnopeutta voi testata ohjelmassa "test" komennolla. Testit testaavat alkulukujen luonti algoritmeja. Alla löydät muutamia suoritustuloksia eri asetuksilla.
 ### Miller-Rabin testi yksinään (keskiarvo 10 kerrasta)
 512-bittisen alkuluvun löytäminen kestää keskimäärin 312ms
+
 1024-bittisen alkuluvun löytäminen kestää keskimäärin 1785ms
 ### Miller-Rabin + alkutarkistus 100 ensimmäisellä alkuluvulla (kovakoodattu) (keskiarvo 1000 kerrasta)
 512-bittisen alkuluvun löytäminen kestää keskimäärin 137ms
+
 1024-bittisen alkuluvun löytäminen kestää keskimäärin 621ms
 ### Miller-Rabin + Eratostheneen seula joka löytää 100 ensimmäistä alkulukua (keskiarvo 1000 kerrasta)
 512-bittisen alkuluvun löytäminen kestää keskimäärin 141ms
+
 1024-bittisen alkuluvun löytäminen kestää keskimäärin 616ms
 ### Miller-Rabin + Eratostheneen seula joka löytää kaikki alkuluvut alle 1000 (keskiarvo 1000 kerrasta)
 512-bittisen alkuluvun löytäminen kestää keskimäärin 142ms
+
 1024-bittisen alkuluvun löytäminen kestää keskimäärin 717ms
 
 On mielenkiintoista nähdä että Eratostheneen seulan suurentaminen heikentää algoritmin suorityskykyä. Lyhyiden testien perusteella tapahtuu tämä kun Eratostheneen seulan yläpää nostetaan yli 600.
