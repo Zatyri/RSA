@@ -23,7 +23,7 @@ Ohjelmaa käytetään konsolin kautta.
 ## Projektin algoritmit
 ### Suurten alkulukujen löytäminen
 Suurien alkulukujen löytämiseen käytän parittomia satunnaisia numeroita ja testaan ovatko ne alkulukuja Miller-Rabin testillä. 
-Jos satunnisesti valittu numero ei ole alkuluku lisätään lukuun 2 ja testataan se uudestaan. Näin tarvitaan keskimäärin 1/177 arvausta löytääkseen alkuluvun.
+Jos satunnisesti valittu numero ei ole alkuluku lisätään lukuun 2 ja testataan se uudestaan. Näin tarvitaan keskimäärin 1/177 arvausta (512 bittisen alkuluvun) löytääkseen alkuluvun.
 
 Toteutan myös alemman luokan alkulukutestin, jossa ohjelma yrittää jakaa satunnaista numeroa ensimmäisten sadan alkuluvun kanssa, ja mittaan sen vaikutusta alkuluvun löytämiseen. Ensimmäisten satojen alkulukujen löytämiseen käytän Sieve of Eatosthenes algoritmia. 
 
@@ -39,7 +39,9 @@ Sieve of Eatosthenes aikavaativuus on O(n log(log(n)) ja tilavativuus O(1)
 
 ## Lähteet
 https://www.geeksforgeeks.org/rsa-algorithm-cryptography/
+
 https://www.geeksforgeeks.org/sieve-of-eratosthenes/
+
 https://www.comparitech.com/blog/information-security/rsa-encryption/
 
 
